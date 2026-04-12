@@ -17,30 +17,57 @@ body{background:var(--light);font-family:'DM Sans',sans-serif;min-height:100vh;d
 .brand-name{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;letter-spacing:3px;color:var(--red);line-height:1;margin-top:10px}
 .brand-sub{font-size:0.78rem;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;margin-top:4px}
 .body{padding:28px 24px 24px;text-align:center}
+.photo{width:110px;height:110px;border-radius:50%;object-fit:cover;border:4px solid var(--red);margin-bottom:12px}
 .name{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px;color:var(--dark)}
 .title{font-size:0.85rem;color:#666;margin-top:5px;line-height:1.6}
 .divider{width:40px;height:3px;background:var(--red);border-radius:2px;margin:16px auto}
 .contact-section{display:flex;justify-content:center;margin:8px 0 20px}
 .wa-btn{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;border:none;border-radius:50px;padding:14px 32px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;text-decoration:none;box-shadow:0 4px 18px rgba(37,211,102,0.30);transition:transform 0.18s}
-.wa-btn:hover{transform:translateY(-2px)}
 .actions{display:flex;flex-direction:column;gap:12px;padding:0 0 8px}
-.btn{display:flex;align-items:center;justify-content:center;gap:10px;border:none;border-radius:14px;padding:15px;font-family:'DM Sans',sans-serif;font-size:0.97rem;font-weight:600;cursor:pointer;transition:transform 0.18s;text-decoration:none;width:100%}
-.btn-save{background:var(--dark);color:#fff}
-.btn-pay{background:var(--red);color:#fff}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;border:none;border-radius:14px;padding:15px;font-family:'DM Sans',sans-serif;font-size:0.97rem;font-weight:600;cursor:pointer;text-decoration:none;width:100%;color:#fff}
+.btn-save{background:var(--dark)}
+.btn-pay{background:var(--red)}
+.btn-btc{background:#f7931a}
+.btn-usdt{background:#26a17b}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:999;align-items:center;justify-content:center}
+.modal.show{display:flex}
+.modal-box{background:#fff;border-radius:20px;padding:28px 24px;max-width:320px;width:90%;text-align:center}
+.modal-box h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:1px;margin-bottom:8px}
+.modal-box p{font-size:0.78rem;color:#666;margin-bottom:12px}
+.wallet-addr{background:#f5f5f5;border-radius:10px;padding:12px;font-size:0.75rem;word-break:break-all;color:#111;margin-bottom:16px;cursor:pointer;border:2px dashed #ccc}
+.copy-btn{background:var(--dark);color:#fff;border:none;border-radius:10px;padding:12px 24px;font-size:0.9rem;font-weight:600;cursor:pointer;width:100%}
+.close-btn{background:#eee;color:#333;border:none;border-radius:10px;padding:10px 24px;font-size:0.9rem;font-weight:600;cursor:pointer;width:100%;margin-top:8px}
 .qr-section{text-align:center;padding:16px 24px 8px;border-top:1px solid #eee}
 .qr-label{font-size:0.78rem;color:#999;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
 #qrcode{display:flex;justify-content:center;margin-bottom:8px}
 .footer{background:var(--light);border-top:1px solid #eee;padding:14px 24px;text-align:center;font-size:0.72rem;color:#aaa;letter-spacing:1px;text-transform:uppercase}
 </style>
 </head><body>
-<div class="card">
+<div class="modal" id="btcModal">
+<div class="modal-box">
+<h3>₿ Bitcoin (BTC)</h3>
+<p>Send BTC to this address:</p>
+<div class="wallet-addr" id="btcAddr">156Lfd22PZZzpAee6MCzei6F1oP4iM3TgV</div>
+<button class="copy-btn" onclick="copyAddr('btcAddr','btcModal')">Copy Address</button>
+<button class="close-btn" onclick="closeModal('btcModal')">Close</button>
+</div>
+</div>
+<div class="modal" id="usdtModal">
+<div class="modal-box">
+<h3>₮ USDT (TRC20)</h3>
+<p>Send USDT to this address:</p>
+<div class="wallet-addr" id="usdtAddr">TQVA1MsbqyF1bN2Q64fSrK9EnT2uuB52fz</div>
+<button class="copy-btn" onclick="copyAddr('usdtAddr','usdtModal')">Copy Address</button>
+<button class="close-btn" onclick="closeModal('usdtModal')">Close</button>
+</div>
+</div><div class="card">
 <div class="banner">
 <div class="logo-wrap"><span class="logo-icon">🔧</span></div>
 <div class="brand-name">INDEPENDENT</div>
 <div class="brand-sub">Auto Repairs</div>
 </div>
 <div class="body">
-<img src="https://raw.githubusercontent.com/Chemist1987/Business-card-/main/20260213_222555.jpg" style="width:110px;height:110px;border-radius:50%;object-fit:cover;border:4px solid #e01c1c;margin-bottom:12px;">
+<img class="photo" src="https://raw.githubusercontent.com/Chemist1987/Business-card-/main/20260213_222555.jpg">
 <div class="name">Abraham Greene</div>
 <div class="title">Auto Mechanic &nbsp;/&nbsp; Auto Electrician<br>Key Programming</div>
 <div class="divider"></div>
@@ -49,18 +76,10 @@ body{background:var(--light);font-family:'DM Sans',sans-serif;min-height:100vh;d
 <svg width="22" height="22" fill="#fff" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 WhatsApp</a>
 </div><div class="actions">
-<a class="btn btn-save" href="data:text/vcard;charset=utf-8,BEGIN:VCARD%0AVERSION:3.0%0AFN:Abraham Greene%0AORG:Independent Auto Repairs%0ATEL:+18687221703%0AEMAIL:independentauto1987@gmail.com%0AEND:VCARD" download="Abraham-Greene.vcf">
-💾 Save Contact
-</a>
-<a class="btn btn-pay" href="https://wa.me/18687221703?text=Hi%20Abraham%2C%20I%20would%20like%20to%20make%20a%20payment%20via%20Paywise%20to%20account%3A%2018687221703" target="_blank">
-💳 Pay Now via Paywise
-<a class="btn btn-pay" href="bitcoin:156Lfd22PZZzpAee6MCzei6F1oP4iM3TgV" style="background:#f7931a;">
-₿ Pay with Bitcoin
-</a>
-<a class="btn btn-pay" href="javascript:alert("USDT TRC20 Address: TQVA1MsbqyF1bN2Q64fSrK9EnT2uuB52fz")" style="background:#26a17b;">
-₮ Pay with USDT
-</a>
-</a>
+<a class="btn btn-save" href="data:text/vcard;charset=utf-8,BEGIN:VCARD%0AVERSION:3.0%0AFN:Abraham Greene%0AORG:Independent Auto Repairs%0ATEL:+18687221703%0AEMAIL:independentauto1987@gmail.com%0AEND:VCARD" download="Abraham-Greene.vcf">💾 Save Contact</a>
+<a class="btn btn-pay" href="https://wa.me/18687221703?text=Hi%20Abraham%2C%20I%20would%20like%20to%20make%20a%20payment%20via%20Paywise%20to%20account%3A%2018687221703" target="_blank">💳 Pay Now via Paywise</a>
+<button class="btn btn-btc" onclick="document.getElementById('btcModal').classList.add('show')">₿ Pay with Bitcoin</button>
+<button class="btn btn-usdt" onclick="document.getElementById('usdtModal').classList.add('show')">₮ Pay with USDT</button>
 </div>
 </div>
 <div class="qr-section">
@@ -72,6 +91,8 @@ WhatsApp</a>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 new QRCode(document.getElementById("qrcode"),{text:"https://wa.me/18687221703",width:160,height:160,colorDark:"#111111",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.H});
+function closeModal(id){document.getElementById(id).classList.remove('show')}
+function copyAddr(addrId,modalId){var txt=document.getElementById(addrId).innerText;navigator.clipboard.writeText(txt).then(function(){alert('Address copied!');closeModal(modalId);})}
 </script>
 </body>
 </html>
